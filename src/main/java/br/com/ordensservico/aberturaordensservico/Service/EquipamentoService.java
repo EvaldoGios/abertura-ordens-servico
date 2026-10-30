@@ -8,20 +8,28 @@ import org.springframework.stereotype.Service;
 import br.com.ordensservico.aberturaordensservico.Model.Equipamento;
 import br.com.ordensservico.aberturaordensservico.Model.Setor;
 import br.com.ordensservico.aberturaordensservico.Repository.EquipamentoRepository;
-
+import br.com.ordensservico.aberturaordensservico.Repository.SetorRepository;
 
 
 @Service 
 public class EquipamentoService {
 
     private final EquipamentoRepository equipamentoRepository;
+    private final SetorRepository setorRepository;
 
-    public EquipamentoService(EquipamentoRepository equipamentoRepository) {
+    public EquipamentoService(EquipamentoRepository equipamentoRepository, SetorRepository setorRepository) {
         this.equipamentoRepository = equipamentoRepository;
+        this.setorRepository = setorRepository;
     }
-    
+
     public Equipamento cadastrar(Equipamento equipamento) {
-        return equipamentoRepository.save(equipamento);
+
+    Setor setor = setorRepository.findById(equipamento.getSetor().getId())
+            .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
+
+    equipamento.setSetor(setor);
+
+    return equipamentoRepository.save(equipamento);
     }
 
     public List<Equipamento> listar() {

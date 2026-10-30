@@ -23,7 +23,7 @@ public class Equipamento {
     private String nome;
 
     @NotBlank (message = "O numero do Patrimonio e obrigatorio")
-    private int numeroPatrimonio;
+    private String numeroPatrimonio;
 
     @ManyToOne
     @JoinColumn(name = "setor_id", nullable = false)
@@ -44,12 +44,20 @@ public class Equipamento {
         this.nome = nome;
     }
 
-    public int getNumeroPatrimonio() {
+    public String getNumeroPatrimonio() {
     return this.numeroPatrimonio;
     }
 
-   public void setNumeroPatrimonio(int numeroPatrimonio) {
+   public void setNumeroPatrimonio(String numeroPatrimonio) {
     this.numeroPatrimonio = numeroPatrimonio;
+    }
+
+    public Setor getSetor() {
+    return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
     }
     
 }
