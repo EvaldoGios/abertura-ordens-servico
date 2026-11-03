@@ -10,4 +10,4 @@ import br.com.ordensservico.aberturaordensservico.Model.Setor;
 public interface SetorRepository
         extends JpaRepository<Setor, Integer> {
                 
-        }
+}

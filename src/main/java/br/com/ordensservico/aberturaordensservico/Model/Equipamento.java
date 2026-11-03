@@ -23,12 +23,12 @@ public class Equipamento {
     @NotBlank (message = "O nome e obrigatorio")
     private String nome;
 
-    @NotBlank (message = "O numero do Patrimonio e obrigatorio")
+    @NotBlank (message = "O numero do Patrimonio é obrigatorio")
     private String numeroPatrimonio;
 
-    @NotNull(message = "O setor é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "setor_id", nullable = false)
+    @NotNull(message = "O setor é obrigatório.")
     private Setor setor;
 
     public Equipamento() {

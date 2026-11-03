@@ -16,7 +16,7 @@ public class Setor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank (message = "O nome e obrigatorio")
+    @NotBlank (message = "O nome do setor é obrigatorio")
     private String nome;
 
     public Setor() {
