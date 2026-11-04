@@ -23,20 +23,22 @@ public class EquipamentoService {
         this.setorRepository = setorRepository;
     }
 
-    public Equipamento cadastrar(EquipamentoRequest request) {
-    
-    Setor setor = setorRepository.findById(request.getSetorId())
-            .orElseThrow(() -> new RuntimeException("Setor não encontrado"));
+    public Optional<Equipamento> cadastrar(EquipamentoRequest equipamentoRequest) {
+        Optional<Setor> setorEncontrado = setorRepository.findById(equipamentoRequest.getSetorId());
 
-    Equipamento equipamento = new Equipamento();
-    equipamento.setNome(request.getNome());
+        if (setorEncontrado.isEmpty()) {
+            return Optional.empty();
+        }
 
-    equipamento.setNumeroPatrimonio(request.getNumeroPatrimonio());
+        Equipamento equipamento = new Equipamento();
+        
+        equipamento.setNome(equipamentoRequest.getNome());
+        equipamento.setNumeroPatrimonio(equipamentoRequest.getNumeroPatrimonio());
+        equipamento.setSetor(setorEncontrado.get());
 
-    equipamento.setSetor(setor);
-
-    return equipamentoRepository.save(equipamento);
-}
+        Equipamento equipamentoCadastrado = equipamentoRepository.save(equipamento);
+        return Optional.of(equipamentoCadastrado);
+    }
 
     public List<Equipamento> listar() {
         return equipamentoRepository.findAll();
