@@ -9,6 +9,7 @@ import br.com.ordensservico.aberturaordensservico.Model.Equipamento;
 import br.com.ordensservico.aberturaordensservico.Model.OrdemServico;
 import br.com.ordensservico.aberturaordensservico.Repository.EquipamentoRepository;
 import br.com.ordensservico.aberturaordensservico.Repository.OrdemServicoRepository;
+import br.com.ordensservico.aberturaordensservico.dto.EncerramentoOrdemServicoRequest;
 import br.com.ordensservico.aberturaordensservico.dto.OrdemServicoRequest;
 import java.time.LocalDateTime;
 
@@ -40,11 +41,31 @@ public class OrdemServicoService {
     }
 
     public List<OrdemServico> listar() {
-    return ordemServicoRepository.findAll();
+        return ordemServicoRepository.findAll();
     }
 
     public Optional<OrdemServico> buscarPorId(Integer id) {
         return ordemServicoRepository.findById(id);
+    }
+
+    public Optional<OrdemServico> encerrar(Integer id, EncerramentoOrdemServicoRequest encerramentoRequest) {
+
+        Optional<OrdemServico> ordemServicoOptional = ordemServicoRepository.findById(id);
+
+        if (ordemServicoOptional.isPresent()) {
+
+            OrdemServico ordemServico = ordemServicoOptional.get();
+            ordemServico.setSolucao(encerramentoRequest.getSolucao());
+            ordemServico.setDataFechamento(LocalDateTime.now());
+            ordemServicoRepository.save(ordemServico);
+            return Optional.of(ordemServico);
+
+        }
+        return Optional.empty();
+    }
+
+    public List<OrdemServico> listarOrdensEmAberto() {
+        return ordemServicoRepository.findByDataFechamentoIsNull();
     }
     
 }

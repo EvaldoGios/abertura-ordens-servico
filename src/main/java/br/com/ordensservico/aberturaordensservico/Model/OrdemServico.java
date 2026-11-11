@@ -30,6 +30,10 @@ public class OrdemServico {
     @NotNull (message = "O equipamento é obrigatório.")
     private Equipamento equipamento;
 
+    private LocalDateTime dataFechamento;
+
+    private String solucao;
+
     public OrdemServico() {
     }
 
@@ -59,6 +63,22 @@ public class OrdemServico {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
+    }
+
+    public LocalDateTime getDataFechamento() {
+        return dataFechamento;
+    }
+
+    public void setDataFechamento(LocalDateTime dataFechamento) {
+        this.dataFechamento = dataFechamento;
+    }
+
+    public String getSolucao() {
+        return solucao;
+    }
+
+    public void setSolucao(String solucao) {
+        this.solucao = solucao;
     }
 
 }
